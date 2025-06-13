@@ -1,0 +1,69 @@
+import styled from 'styled-components';
+
+export const Wrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background: #f5f5f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Container = styled.div`
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 48px 40px;
+  min-width: 400px;
+`;
+
+export const Title = styled.h2`
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 32px;
+  color: black;
+`;
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+`;
+
+export const Input = styled.input`
+  padding: 10px 14px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+`;
+
+export const Button = styled.button`
+  margin-top: 18px;
+  padding: 12px 0;
+  background: #3575f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+`;
+
+export const SignupButton = styled.button`
+  margin-top: 8px;
+  padding: 12px 0;
+  background: #e0e0e0;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+`;
+
+export const Message = styled.div`
+  margin-top: 18px;
+  color: #d32f2f;
+  font-size: 16px;
+  text-align: center;
+`; 
