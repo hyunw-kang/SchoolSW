@@ -9,7 +9,8 @@ CORS(app, resources={
         "methods": ["GET", "POST", "OPTIONS"],
         "allow_headers": ["Content-Type"],
         "expose_headers": ["Content-Type"],
-        "supports_credentials": True
+        "supports_credentials": True,
+        "max_age": 3600
     }
 })
 
@@ -170,7 +171,9 @@ def reserved_tables():
     rows = c.fetchall()
     conn.close()
     reserved = [row[0] for row in rows]
-    return jsonify({'reserved': reserved})
+    response = jsonify({'reserved': reserved})
+    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:5173')
+    return response
 
 if __name__ == '__main__':
     init_db()

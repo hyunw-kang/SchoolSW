@@ -41,10 +41,10 @@ function TableView() {
   };
 
   const getTableBox = (table, reserved, onClick) => {
-    if (table.label === '2인석') return <TableBox2 reserved={reserved} onClick={onClick}><TableLabel>{table.label}</TableLabel></TableBox2>;
-    if (table.label === '4인석') return <TableBox4 reserved={reserved} onClick={onClick}><TableLabel>{table.label}</TableLabel></TableBox4>;
-    if (table.label === '6인석') return <TableBox6 reserved={reserved} onClick={onClick}><TableLabel>{table.label}</TableLabel></TableBox6>;
-    if (table.label === '8인석') return <TableBox8 reserved={reserved} onClick={onClick}><TableLabel>{table.label}</TableLabel></TableBox8>;
+    if (table.label === '2인석') return <TableBox2 reserved={reserved ? 'true' : undefined} onClick={onClick}><TableLabel>{table.label}</TableLabel></TableBox2>;
+    if (table.label === '4인석') return <TableBox4 reserved={reserved ? 'true' : undefined} onClick={onClick}><TableLabel>{table.label}</TableLabel></TableBox4>;
+    if (table.label === '6인석') return <TableBox6 reserved={reserved ? 'true' : undefined} onClick={onClick}><TableLabel>{table.label}</TableLabel></TableBox6>;
+    if (table.label === '8인석') return <TableBox8 reserved={reserved ? 'true' : undefined} onClick={onClick}><TableLabel>{table.label}</TableLabel></TableBox8>;
     return null;
   };
 

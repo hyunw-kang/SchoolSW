@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 function BookPage() {
   const location = useLocation();
-  const { table, date } = location.state || {};
+  const { table, date, time } = location.state || {};
   const user = JSON.parse(localStorage.getItem('user')) || {};
   const [form, setForm] = useState({
     name: user.name || '',
@@ -22,11 +22,9 @@ function BookPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // 예약 정보 서버로 전송
-    const res = await fetch('http://localhost:5001/reserve', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+    try {
+      // 예약 정보 서버로 전송
+      console.log('Sending reservation data:', {
         username: user.username,
         name: form.name,
         email: form.email,
@@ -34,14 +32,44 @@ function BookPage() {
         card: form.card,
         people: form.people,
         table_label: table?.label,
-        date
-      })
-    });
-    const data = await res.json();
-    if (data.success) {
-      setShowPopup(true);
-    } else {
-      alert(data.message || '예약에 실패했습니다.');
+        date,
+        time
+      });
+      
+      const res = await fetch('http://localhost:5001/reserve', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          username: user.username,
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          card: form.card,
+          people: form.people,
+          table_label: table?.label,
+          date,
+          time
+        })
+      });
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
+      const data = await res.json();
+      console.log('Server response:', data);
+      
+      if (data.success) {
+        setShowPopup(true);
+      } else {
+        alert(data.message || '예약에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('Error submitting reservation:', error);
+      alert('예약 처리 중 오류가 발생했습니다. 다시 시도해주세요.');
     }
   };
 
@@ -55,6 +83,7 @@ function BookPage() {
         <Title>예약하기</Title>
         <Info>
           <div>날짜: {date}</div>
+          <div>시간: {time === 'lunch' ? '점심' : '저녁'}</div>
           <div>테이블: {table?.label}</div>
         </Info>
         <Form onSubmit={handleSubmit}>
@@ -76,6 +105,7 @@ function BookPage() {
           <PopupContent>
             <h3 style={{ color: 'black' }}>예약이 성공적으로 완료되었습니다</h3>
             <PopupLabel>날짜: {date}</PopupLabel>
+            <PopupLabel>시간: {time === 'lunch' ? '점심' : '저녁'}</PopupLabel>
             <PopupLabel>이름: {form.name}</PopupLabel>
             <PopupLabel>이메일: {form.email}</PopupLabel>
             <PopupLabel>전화번호: {form.phone}</PopupLabel>
